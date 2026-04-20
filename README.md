@@ -100,37 +100,37 @@ sudo rm -f /tmp/engine_socket
 ---
 
 ### 2. Metadata tracking
-![Metadata](screenshots/2.png)
+![Metadata](Screenshots/2.png)
 
 ---
 
 ### 3. Logging output
-![Logs](screenshots/3.png)
+![Logs](Screenshots/3.png)
 
 ---
 
 ### 4. CLI and IPC
-![IPC](screenshots/4.png)
+![IPC](Screenshots/4.png)
 
 ---
 
 ### 5. Soft-limit warning
-![Soft Limit](screenshots/5 & 6.png)
+![Soft Limit](Screenshots/5 & 6.png)
 
 ---
 
 ### 6. Hard-limit enforcement
-![Hard Limit](screenshots/5 & 6.png)
+![Hard Limit](Screenshots/5 & 6.png)
 
 ---
 
 ### 7. Scheduling experiment
-![Scheduling](screenshots/7.png)
+![Scheduling](Screenshots/7.png)
 
 ---
 
 ### 8. Clean teardown
-![Teardown](screenshots/8.png)
+![Teardown](Screenshots/8.png)
 
 ---
 

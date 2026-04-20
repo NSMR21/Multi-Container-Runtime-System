@@ -8,8 +8,8 @@ This project implements a simple container engine using `chroot`, process manage
 
 ## 👥 Team Information
 
-- **Nagalapuram Sai Mukesh Reddy** — SRN: PES1UG24AM170
-- **Mallela Rishyendra** — SRN: PES1UG24AM154
+- **Neeraj R Gowda** — SRN: 295  
+- **Nallamalli Kanaka Mani Sai Akhil** — SRN: PES1UG24CS290  
 
 ---
 
@@ -28,65 +28,63 @@ This project implements a simple container engine using `chroot`, process manage
 
 ## 🛠️ Setup & Execution
 
-### 1. Build Project
+### Build Project
 ```bash
 make
 ```
 
-### 2. Load Kernel Module
+### Load Kernel Module
 ```bash
 sudo insmod monitor.ko
 ```
 
-### 3. Start Supervisor
+### Start Supervisor
 ```bash
 sudo ./engine supervisor
 ```
 
-### 4. Prepare Root Filesystems
+### Prepare Root Filesystems
 ```bash
 cp -a rootfs-base rootfs-alpha
 cp -a rootfs-base rootfs-beta
 ```
 
-### 5. Run Containers
-
-#### Multi-container execution
+### Run Containers
 ```bash
 sudo ./engine start alpha ../rootfs-alpha /cpu_hog 20
 sudo ./engine start beta  ../rootfs-beta  /cpu_hog 20
 ```
 
-#### Scheduling experiment (CPU vs IO)
+### Scheduling Experiment
 ```bash
 sudo ./engine start alpha ../rootfs-alpha /cpu_hog 20
 sudo ./engine start beta  ../rootfs-beta  /io_pulse
 ```
 
-### 6. Check Container Status
+### Check Status
 ```bash
 sudo ./engine ps
 ```
 
-### 7. View Logs
+### View Logs
 ```bash
 sudo ./engine logs alpha
 sudo ./engine logs beta
 ```
 
-### 8. Stop Containers
+### Stop Containers
 ```bash
 sudo ./engine stop alpha
 sudo ./engine stop beta
 ```
 
-### 9. Kernel Monitoring
+### Kernel Monitoring
 ```bash
 sudo ./engine start alpha ../rootfs-alpha /memory_hog
 sudo dmesg | grep monitor
 ```
 
-### 10. Cleanup
+### Cleanup
 ```bash
 sudo pkill -9 engine
 sudo rm -f /tmp/engine_socket
@@ -96,55 +94,83 @@ sudo rm -f /tmp/engine_socket
 
 ## 📸 Demo Screenshots
 
-| # | Feature |
-|--|--------|
-| 1 | Multi-container supervision |
-| 2 | Metadata tracking (`ps`) |
-| 3 | Logging output |
-| 4 | CLI and IPC |
-| 5 | Soft limit warning |
-| 6 | Hard limit enforcement |
-| 7 | Scheduling experiment |
-| 8 | Clean teardown |
+### 1. Multi-container supervision
+![Multi-container](screenshots/1.png)
+
+---
+
+### 2. Metadata tracking
+![Metadata](screenshots/2.png)
+
+---
+
+### 3. Logging output
+![Logs](screenshots/3.png)
+
+---
+
+### 4. CLI and IPC
+![IPC](screenshots/4.png)
+
+---
+
+### 5. Soft-limit warning
+![Soft Limit](screenshots/5 & 6.png)
+
+---
+
+### 6. Hard-limit enforcement
+![Hard Limit](screenshots/5 & 6.png)
+
+---
+
+### 7. Scheduling experiment
+![Scheduling](screenshots/7.png)
+
+---
+
+### 8. Clean teardown
+![Teardown](screenshots/8.png)
 
 ---
 
 ## 🧠 System Design
 
-### 🧩 Container Isolation
+### Container Isolation
 - Implemented using `chroot`
 - Each container runs as a separate process
 - No full namespace isolation
 
 ---
 
-### 🧭 Supervisor
+### Supervisor
 - Central controller for all containers
-- Handles `start`, `stop`, `ps`, and `logs`
-- Tracks container state
-- Ensures no zombie processes remain
+- Handles lifecycle management
+- Ensures no zombie processes
 
 ---
 
-### 🔌 IPC (CLI ↔ Supervisor)
+### IPC (CLI ↔ Supervisor)
 - Implemented using UNIX domain sockets
 - CLI sends commands to supervisor
-- Supervisor executes and returns results
+- Supervisor processes and responds
 
 ---
 
-### 📜 Logging
+### Logging
 - Pipes capture container output
-- Logs accessed via `engine logs`
-- Separate logs maintained per container
+- Logs accessed using `engine logs`
+- Separate logs per container
 
 ---
 
-### 🧬 Kernel Monitoring (monitor.ko)
-- Registers container processes
-- Simulates memory monitoring
-- Generates:
+### Kernel Monitoring
+- Implemented via `monitor.ko`
+- Simulates:
+  - Soft limit warnings  
+  - Hard limit enforcement  
 
+Example:
 ```
 monitor: Registered container alpha
 monitor: Soft limit exceeded for alpha
@@ -153,55 +179,45 @@ monitor: Killing container alpha
 
 ---
 
-### ⚖️ Scheduling Experiment
+### Scheduling Behavior
 
-Two workloads are used:
+- **CPU-bound (`cpu_hog`)** → continuous execution  
+- **I/O-bound (`io_pulse`)** → periodic execution  
 
-#### CPU-bound (`cpu_hog`)
-- Continuous execution
-- High CPU usage
-
-#### I/O-bound (`io_pulse`)
-- Periodic execution
-- Yields CPU frequently
-
-**Observation:**
-- CPU-bound process runs continuously  
-- I/O-bound process runs intermittently  
-- Demonstrates fair scheduling behavior  
+➡ Demonstrates fair scheduling
 
 ---
 
-## ⚖️ Design Decisions & Tradeoffs
+## ⚖️ Design Decisions
 
 | Choice | Reason | Limitation |
 |------|--------|-----------|
-| `chroot` | Simple isolation | Not fully secure |
+| chroot | Simple isolation | Not fully secure |
 | Single supervisor | Easy control | Single point of failure |
-| Pipes for logging | Simple implementation | Limited scalability |
-| Kernel module simulation | Easy demonstration | Not real memory tracking |
+| Pipes | Simple logging | Limited scalability |
+| Kernel simulation | Easy demo | Not real monitoring |
 
 ---
 
-## 📊 Key Observations
+## 📊 Observations
 
 - Multiple containers run concurrently  
-- CLI communicates with supervisor via IPC  
-- Logs correctly capture container output  
-- Kernel module generates expected monitoring output  
-- Scheduler fairly distributes CPU between workloads  
+- IPC works correctly  
+- Logs capture execution behavior  
+- Kernel module generates expected output  
+- Scheduler distributes CPU fairly  
 
 ---
 
 ## 🧾 Conclusion
 
-This project demonstrates key OS concepts:
+This project demonstrates:
 
 - Process management  
-- Containerization using `chroot`  
-- Inter-process communication  
+- Containerization  
+- IPC mechanisms  
 - Logging systems  
 - Kernel interaction  
 - Scheduling behavior  
 
-A minimal yet functional container runtime built using low-level Linux primitives.
+A simple but functional container runtime built using Linux primitives.

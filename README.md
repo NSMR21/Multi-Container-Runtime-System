@@ -8,8 +8,8 @@ This project implements a simple container engine using `chroot`, process manage
 
 ## 👥 Team Information
 
-- **Neeraj R Gowda** — SRN: 295  
-- **Nallamalli Kanaka Mani Sai Akhil** — SRN: PES1UG24CS290  
+- **Nagalapuram Sai Mukesh Reddy** — SRN: PES1UG24AM170  
+- **Mallela Rishyendra** — SRN: PES1UG24AM154 
 
 ---
 

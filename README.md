@@ -95,7 +95,7 @@ sudo rm -f /tmp/engine_socket
 ## 📸 Demo Screenshots
 
 ### 1. Multi-container supervision
-![Multi-container](screenshots/1.png)
+![Multi-container](Screenshots/1.png)
 
 ---
 

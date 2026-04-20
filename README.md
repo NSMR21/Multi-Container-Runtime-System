@@ -115,12 +115,12 @@ sudo rm -f /tmp/engine_socket
 ---
 
 ### 5. Soft-limit warning
-![Soft Limit](Screenshots/5 & 6.png)
+![Soft Limit](Screenshots/5&6.png)
 
 ---
 
 ### 6. Hard-limit enforcement
-![Hard Limit](Screenshots/5 & 6.png)
+![Hard Limit](Screenshots/5&6.png)
 
 ---
 
